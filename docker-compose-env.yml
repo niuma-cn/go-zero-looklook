@@ -188,9 +188,9 @@ services:
       MYSQL_ROOT_PASSWORD: PXDN93VRKUm8TeE7
     ports:
       - 33069:3306
-    volumes:
-      # 数据挂载 - Data mounting
-      - ./data/mysql/data:/var/lib/mysql
+    # volumes:
+    #   # 数据挂载 - Data mounting
+    #   - ./data/mysql/data:/var/lib/mysql
       # 日志
     command:
       # 将mysql8.0默认密码策略 修改为 原先 策略 (mysql8.0对其默认策略做了更改 会导致密码无法匹配) 
@@ -226,8 +226,9 @@ services:
 
 networks:
   looklook_net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.16.0.0/16
+    external: true
+    # driver: bridge
+    # ipam:
+    #   config:
+    #     - subnet: 172.16.0.0/16
 

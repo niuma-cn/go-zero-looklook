@@ -17,6 +17,8 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+USE looklook_order;
+
 -- ----------------------------
 -- Table structure for homestay_order
 -- ----------------------------
