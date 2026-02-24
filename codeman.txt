@@ -3,3 +3,5 @@ CREATE DATABASE IF NOT EXISTS looklook_usercenter CHARACTER SET = utf8mb4 COLLAT
 docker exec -i mysql mysql -uroot -pPXDN93VRKUm8TeE7 < ./deploy/sql/looklook_usercenter.sql
 
 goctl api go -api ./api/app/desc/app.api -dir ./api/app/ -home ~/Documents/goctl --type-group
+
+docker network create --driver bridge --subnet 172.20.0.0/16 looklook_net
