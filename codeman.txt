@@ -1,3 +1,5 @@
 CREATE DATABASE IF NOT EXISTS looklook_usercenter CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 docker exec -i mysql mysql -uroot -pPXDN93VRKUm8TeE7 < ./deploy/sql/looklook_usercenter.sql
+
+goctl api go -api ./api/app/desc/app.api -dir ./api/app/ -home ~/Documents/goctl --type-group
