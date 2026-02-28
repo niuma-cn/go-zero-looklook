@@ -1,0 +1,47 @@
+# https://juejin.cn/post/7341315113158541327
+# Password: 7yT1Q1d6epb2a/2aqx16X3QdHlfUMjMUKIxB9nRwo1Q=
+
+version: '3'
+
+services:
+    gitlab:
+      image: gitlab/gitlab-ce:latest
+      container_name: 'gitlab'
+      restart: always
+      hostname: 'localhost' #部署机器的ip,非容器ip(因为是本地不是线上所以用ip，线上的话可以用域名)
+      privileged: true
+      environment:
+        TZ: 'Asia/Shanghai'
+        GITLAB_OMNIBUS_CONFIG: |
+          external_url 'http://127.0.0.1:8010'
+          
+          # 时区设置
+          gitlab_rails['time_zone'] = 'Asia/Shanghai'
+          
+          # 默认语言设置为中文（简体）- Safari 完美支持
+          gitlab_rails['gitlab_default_language'] = 'zh_CN'
+        # GITLAB_ROOT_PASSWORD: '12345678'
+
+      ports:
+        - '8010:8010'        #web 80 端口
+       #- '443:443'      #web 443 端口,本次未使用就不开放了
+        - '2222:22'      #ssh 检出代码 端口
+      volumes:
+        - ../../data/k8senv/gitlab/etc:/etc/gitlab             #Gitlab配置文件目录
+        - ../../data/k8senv/gitlab/data:/var/opt/gitlab  #Gitlab数据目录
+        - ../../data/k8senv/gitlab/logs:/var/log/gitlab   #Gitlab日志目录
+      shm_size: '256m'
+
+    jenkins:
+      image: 'jenkins/jenkins:lts'
+      container_name: jenkins
+      restart: always
+      environment:
+        - TZ=Asia/Shanghai
+      user: root
+      ports:
+        - '8989:8080'
+        - '50000:50000'
+      volumes:
+        - '../../data/k8senv/jenkins/jenkins_home:/var/jenkins_home'
+        - './port.sh:/root/port.sh'
